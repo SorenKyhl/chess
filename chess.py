@@ -102,6 +102,8 @@ def get_valid_squares(piece: ChessPiece, square: ChessSquare, board: ChessBoard)
         valid_squares = get_pawn_valid_squares(board, square, player)
     elif type(piece) is str and piece.lower() == "r":
         valid_squares = get_rook_valid_squares(board, square, player)
+    elif type(piece) is str and piece.lower() == "b":
+        valid_squares = get_bishop_valid_squares(board, square, player)
     else:
         valid_squares = set()
 
@@ -165,8 +167,31 @@ def get_rook_valid_squares(board: ChessBoard, square: ChessSquare, player: Chess
             valid_squares.add((row, col_to))
             col_to += y_dir
 
+    return valid_squares
+
+def get_bishop_valid_squares(board: ChessBoard, square: ChessSquare, player: ChessPlayer) -> Set[BoardIndices]:
+
+    valid_squares = set()
+    row, col = indices(square)
+
+    dirs = [-1, 1]
+    for x_dir in dirs:
+        for y_dir in dirs:
+            row_to = row + x_dir
+            col_to = col + y_dir
+            while in_bounds(row_to) and in_bounds(col_to):
+                piece = board[row_to][col_to]
+                if piece:
+                    if player_from_piece(piece) == opponent(player):
+                        valid_squares.add((row_to, col_to))
+                    break
+                valid_squares.add((row_to, col_to))
+
+                row_to += x_dir
+                col_to += y_dir
 
     return valid_squares
+
 
 
 def remove_piece(square: ChessSquare, board: ChessBoard) -> ChessBoard:
@@ -242,14 +267,14 @@ def select_move(board: ChessBoard, square_from: ChessSquare) -> bool:
 
 def main():
     board = [
-            ["r", 0, 0, 0, 0, 0, 0, "r"],
+            ["r", 0, "b", 0, 0, "b", 0, "r"],
             ["p", "p", "p", "p", "p", "p", "p", "p"],
             [0, 0, 0, 0, 0, 0, 0, 0],
             [0, 0, 0, 0, 0, 0, 0, 0],
             [0, 0, 0, 0, 0, 0, 0, 0],
             [0, 0, 0, 0, 0, 0, 0, 0],
             ["P","P","P","P","P","P","P","P"],
-            ["R", 0, 0, 0, 0, 0, 0, "R"],
+            ["R", 0, "B", 0, 0, "B", 0, "R"],
             ]
 
     player = 1

@@ -1,6 +1,6 @@
 
 """
-# Chess But You Only Have Pawns and Rooks
+# Chess Game
 ![example workflow](https://github.com/SorenKyhl/chess/actions/workflows/python-app.yml/badge.svg)
 
 Functional Implementation; no OOP
@@ -8,12 +8,12 @@ Functional Implementation; no OOP
 
 # Current Features:
     - core game loop: players take turn selecting and moving pieces
-    - basic pawn and rook logic: moving and captures
+    - basic pawn, rook, and bishop logic: moving and captures
         - not implemented: en passant, queen promotion
 
 
 # Not Implemented:
-    - King, Queen, Bishop, Knights
+    - King, Queen, Knights
     - check and checkmate logic
     - draw and stalemate logic
     - points counter to show who has more material on the board
