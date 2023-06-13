@@ -1,7 +1,8 @@
 
 """
-# Chess Engine
+# Chess But You Only Have Pawns
 Functional Implementation; no OOP
+
 
 # Current Features:
     - core game loop: players take turn selecting and moving pieces
