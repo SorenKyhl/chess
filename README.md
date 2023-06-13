@@ -8,12 +8,12 @@ Functional Implementation; no OOP
 
 # Current Features:
     - core game loop: players take turn selecting and moving pieces
-    - basic pawn, and sliding pieces logic: moving and captures
+    - basic pawn, knight, and sliding pieces logic: moving and captures
         - not implemented: en passant, queen promotion
 
 
 # Not Implemented:
-    - King, Knight
+    - Knight
     - check and checkmate logic
     - draw and stalemate logic
     - points counter to show who has more material on the board

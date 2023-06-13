@@ -105,6 +105,8 @@ def get_valid_squares(piece: ChessPiece, square: ChessSquare, board: ChessBoard)
         valid_squares = get_bishop_valid_squares(board, square, player)
     elif type(piece) is str and piece.lower() == "q":
         valid_squares = get_queen_valid_squares(board, square, player)
+    elif type(piece) is str and piece.lower() == "k":
+        valid_squares = get_knight_valid_squares(board, square, player)
     else:
         valid_squares = set()
 
@@ -200,6 +202,54 @@ def get_queen_valid_squares(board: ChessBoard, square: ChessSquare, player: Ches
     valid_squares = valid_squares.union(get_bishop_valid_squares(board, square, player))
     return valid_squares
 
+def get_knight_valid_squares(board: ChessBoard, square: ChessSquare, player: ChessPlayer) -> Set[BoardIndices]:
+    valid_squares = set()
+    row, col = indices(square)
+
+    dirs = [[2, 1],
+            [2, -1],
+            [1, 2],
+            [-1, 2],
+            [-2, 1],
+            [-2, -1],
+            [1, -2],
+            [-1, -2]]
+
+    for dir in dirs:
+        x_dir, y_dir = dir
+        row_to = row + x_dir
+        col_to = col + y_dir
+        if in_bounds(row_to) and in_bounds(col_to):
+            if player_from_piece(board[row_to][col_to]) == player:
+                continue
+            valid_squares.add((row_to, col_to))
+
+
+    """
+    dirs = [-1, 1]
+    for x_dir in dirs:
+        row_to = row + 2*x_dir
+        for y_dir in dirs:
+            col_to = col + y_dir
+            if in_bounds(row_to) and in_bounds(col_to):
+                if player_from_piece(board[row_to][col_to]) == player:
+                    continue
+                valid_squares.add((row_to, col_to))
+
+    for y_dir in dirs:
+        col_to = col + 2* y_dir
+        for x_dir in dirs:
+            row_to = row + x_dir
+            if in_bounds(row_to) and in_bounds(col_to):
+                if player_from_piece(board[row_to][col_to]) == player:
+                    continue
+                valid_squares.add((row_to, col_to))
+    """
+
+    return valid_squares
+
+
+
 def remove_piece(square: ChessSquare, board: ChessBoard) -> ChessBoard:
     """remove piece at the given chess square"""
     idx = indices(square)
@@ -273,14 +323,14 @@ def select_move(board: ChessBoard, square_from: ChessSquare) -> bool:
 
 def main():
     board = [
-            ["r", 0, "b", 0, "q", "b", 0, "r"],
+            ["r", "k", "b", 0, "q", "b", "k", "r"],
             ["p", "p", "p", "p", "p", "p", "p", "p"],
             [0, 0, 0, 0, 0, 0, 0, 0],
             [0, 0, 0, 0, 0, 0, 0, 0],
             [0, 0, 0, 0, 0, 0, 0, 0],
             [0, 0, 0, 0, 0, 0, 0, 0],
             ["P","P","P","P","P","P","P","P"],
-            ["R", 0, "B", 0, "Q", "B", 0, "R"],
+            ["R", "K", "B", 0, "Q", "B", "K", "R"],
             ]
 
     player = 1
