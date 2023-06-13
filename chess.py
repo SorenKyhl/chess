@@ -204,12 +204,14 @@ def main():
             ]
 
     player = 1
+    move = 1
 
     while True:
         os.system("clear")
-        print("Chess Game")
+        print("----Chess Game-----")
         print("White: uppercase, Black: lowercase")
-        print(player_to_string(player) +"'s turn")
+        print(f"Move: {move}")
+        print(f"{player_to_string(player)}'s turn")
         print_board(board)
 
         square_from = select_piece(board, player)
@@ -220,6 +222,7 @@ def main():
             continue
 
         player = opponent(player)
+        move += 0.5
         
         print_board(board)
 
