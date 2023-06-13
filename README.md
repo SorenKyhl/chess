@@ -9,7 +9,7 @@ Functional Implementation; no OOP
 # Current Features:
     - core game loop: players take turn selecting and moving pieces
     - basic pawn logic: moving and captures
-        - not implemented: first move two spaces, en passant, queen promotion
+        - not implemented: en passant, queen promotion
 
 
 # Not Implemented:

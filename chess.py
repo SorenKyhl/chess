@@ -86,6 +86,7 @@ def opponent(player: ChessPlayer) -> ChessPlayer:
     """returns the integer representation of the opponent"""
     return 0 if player else 1
 
+
 def player_to_string(player: ChessPlayer) -> str:
     return "white" if player else "black"
 
@@ -101,6 +102,7 @@ def get_valid_squares(piece: ChessPiece, square: ChessSquare, board: ChessBoard)
         valid_squares = set()
 
     return valid_squares
+
 
 def get_pawn_valid_squares(board: ChessBoard, square: ChessSquare, player: ChessPlayer) -> Set[BoardIndices]:
     """return set of valid squares for a pawn at the given square"""
@@ -118,6 +120,11 @@ def get_pawn_valid_squares(board: ChessBoard, square: ChessSquare, player: Chess
     if player_from_piece(board[row + direction][col+1]) == opponent(player) and col < 7:
         # capture left
         valid_squares.add((row + direction, col+1))
+
+    # first move two squares
+    if (player and square[1] == "2") or (not player and square[1] == "7"):
+        if not board[row+direction][col] and not board[row+2*direction][col]:
+            valid_squares.add((row + 2*direction, col))
 
     return valid_squares
 
@@ -160,12 +167,14 @@ def select_piece(board: ChessBoard, player) -> ChessSquare:
 
     return square_from
 
+
 def print_valid_move_squares(square_from: ChessSquare, board: ChessBoard):
     piece = get_piece(square_from, board)
     valid_squares = get_valid_squares(piece, square_from, board)
 
     print("valid moves:")
     print([square_from_indices(idx) for idx in valid_squares])
+
 
 def select_move(board: ChessBoard, square_from: ChessSquare) -> bool:
     """select move and carry out move if valid. 
