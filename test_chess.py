@@ -10,6 +10,7 @@ def test_valid_square():
     assert(not chess.valid_square("e"))
     assert(not chess.valid_square("j1"))
     assert(not chess.valid_square("a9"))
+    assert(not chess.valid_square("aa3"))
 
 
 def test_indices():
