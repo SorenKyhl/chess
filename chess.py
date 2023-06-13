@@ -186,7 +186,7 @@ def select_move(board: ChessBoard, square_from: ChessSquare) -> bool:
         if square_to == "x":
             return False
 
-        if not valid_square(square_from):
+        if not valid_square(square_to):
             print("Invalid square: input a square acccording to it's rank and file\n")
             continue
 
