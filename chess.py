@@ -98,12 +98,13 @@ def get_valid_squares(piece: ChessPiece, square: ChessSquare, board: ChessBoard)
     if piece == 0:
         valid_squares = set()
     elif type(piece) is str and piece.lower() == "p":
-        # pawn
         valid_squares = get_pawn_valid_squares(board, square, player)
     elif type(piece) is str and piece.lower() == "r":
         valid_squares = get_rook_valid_squares(board, square, player)
     elif type(piece) is str and piece.lower() == "b":
         valid_squares = get_bishop_valid_squares(board, square, player)
+    elif type(piece) is str and piece.lower() == "q":
+        valid_squares = get_queen_valid_squares(board, square, player)
     else:
         valid_squares = set()
 
@@ -193,6 +194,11 @@ def get_bishop_valid_squares(board: ChessBoard, square: ChessSquare, player: Che
     return valid_squares
 
 
+def get_queen_valid_squares(board: ChessBoard, square: ChessSquare, player: ChessPlayer) -> Set[BoardIndices]:
+    valid_squares = set()
+    valid_squares = valid_squares.union(get_rook_valid_squares(board, square, player))
+    valid_squares = valid_squares.union(get_bishop_valid_squares(board, square, player))
+    return valid_squares
 
 def remove_piece(square: ChessSquare, board: ChessBoard) -> ChessBoard:
     """remove piece at the given chess square"""
@@ -267,14 +273,14 @@ def select_move(board: ChessBoard, square_from: ChessSquare) -> bool:
 
 def main():
     board = [
-            ["r", 0, "b", 0, 0, "b", 0, "r"],
+            ["r", 0, "b", 0, "q", "b", 0, "r"],
             ["p", "p", "p", "p", "p", "p", "p", "p"],
             [0, 0, 0, 0, 0, 0, 0, 0],
             [0, 0, 0, 0, 0, 0, 0, 0],
             [0, 0, 0, 0, 0, 0, 0, 0],
             [0, 0, 0, 0, 0, 0, 0, 0],
             ["P","P","P","P","P","P","P","P"],
-            ["R", 0, "B", 0, 0, "B", 0, "R"],
+            ["R", 0, "B", 0, "Q", "B", 0, "R"],
             ]
 
     player = 1
