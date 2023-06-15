@@ -1,5 +1,7 @@
 import os
+import copy
 from typing import List, Union, Tuple, Set
+
 
 ChessSquare = str
 ChessPiece = Union[str, int]
@@ -80,6 +82,16 @@ def valid_move(square_from: ChessSquare, square_to: ChessSquare, board: ChessBoa
         return False
 
     return indices(square_to) in get_valid_squares(piece, square_from, board)
+
+
+def attacking_squares(board: ChessBoard, player: ChessPlayer) -> Set[BoardIndices]:
+    squares = set()
+    for i, row in enumerate(board):
+        for j, piece in enumerate(row):
+            square_from = square_from_indices((i,j))
+            if player_from_piece(piece) == player:
+                squares = squares.union(get_valid_squares(piece, square_from, board, attack_only=True))
+    return squares
 
 
 def opponent(player: ChessPlayer) -> ChessPlayer:
@@ -297,7 +309,15 @@ def print_valid_move_squares(square_from: ChessSquare, board: ChessBoard):
     print([square_from_indices(idx) for idx in valid_squares])
 
 
-def select_move(board: ChessBoard, square_from: ChessSquare) -> bool:
+def in_check(board: ChessBoard, player: ChessPlayer) -> bool:
+    for i, row in enumerate(board):
+        for j, piece in enumerate(row):
+            if piece and piece.lower() == 'k' and player_from_piece(piece) == player:
+                king_square = square_from_indices((i,j))
+
+    return indices(king_square) in attacking_squares(board, opponent(player))
+
+def select_move(board: ChessBoard, square_from: ChessSquare, player: ChessPlayer) -> bool:
     """select move and carry out move if valid. 
     the user can elect to cancel the move and select a different piece
     returns: [bool] move_success"""
@@ -313,6 +333,12 @@ def select_move(board: ChessBoard, square_from: ChessSquare) -> bool:
 
         if valid_move(square_from, square_to, board):
             board = move_piece(square_from, square_to, board)
+
+            if in_check(board, player):
+                print("You cannot move into check! ")
+                board = move_piece(square_to, square_from, board) # move back
+                continue # try a different move
+
             print("valid move selection")
             break
         else:
@@ -344,9 +370,12 @@ def main():
         print(f"{player_to_string(player)}'s turn")
         print_board(board)
 
+        if in_check(board, player):
+            print("you are in check!!")
+
         square_from = select_piece(board, player)
         print_valid_move_squares(square_from, board)
-        move_success = select_move(board, square_from)
+        move_success = select_move(board, square_from, player)
 
         if not move_success:
             continue

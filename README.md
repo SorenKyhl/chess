@@ -10,11 +10,11 @@ Functional Implementation; no OOP
     - core game loop: players take turn selecting and moving pieces
     - basic pawn, knight, and sliding pieces logic: moving and captures
         - not implemented: en passant, queen promotion
+    - check logic
 
 
 # Not Implemented:
-    - Knight
-    - check and checkmate logic
+    - checkmate logic, king movement
     - draw and stalemate logic
     - points counter to show who has more material on the board
 
