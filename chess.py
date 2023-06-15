@@ -323,14 +323,14 @@ def select_move(board: ChessBoard, square_from: ChessSquare) -> bool:
 
 def main():
     board = [
-            ["r", "n", "b", 0, "q", "b", "n", "r"],
+            ["r", "n", "b", "q", "k", "b", "n", "r"],
             ["p", "p", "p", "p", "p", "p", "p", "p"],
             [0, 0, 0, 0, 0, 0, 0, 0],
             [0, 0, 0, 0, 0, 0, 0, 0],
             [0, 0, 0, 0, 0, 0, 0, 0],
             [0, 0, 0, 0, 0, 0, 0, 0],
             ["P","P","P","P","P","P","P","P"],
-            ["R", "N", "B", 0, "Q", "B", "N", "R"],
+            ["R", "N", "B", "Q", "K", "B", "N", "R"],
             ]
 
     player = 1
