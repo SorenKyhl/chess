@@ -332,7 +332,8 @@ def in_checkmate(board: ChessBoard, player: ChessPlayer) -> bool:
                         # if any move can be played, they are not in checkmate
                         board = move_piece(square_to, square_from, board)
                         return False
-
+                    else:
+                        board = move_piece(square_to, square_from, board)
     return True
                 
 
@@ -393,21 +394,20 @@ def main():
 
         if in_checkmate(board, player):
             print("game over, you are in checkmate!!")
-        else:
-            if in_check(board, player):
-                print("you are in check!!")
+        elif in_check(board, player):
+            print("you are in check!!")
 
-            square_from = select_piece(board, player)
-            print_valid_move_squares(square_from, board)
-            move_success = select_move(board, square_from, player)
+        square_from = select_piece(board, player)
+        print_valid_move_squares(square_from, board)
+        move_success = select_move(board, square_from, player)
 
-            if not move_success:
-                continue
+        if not move_success:
+            continue
 
-            player = opponent(player)
-            move += 0.5
-            
-            print_board(board)
+        player = opponent(player)
+        move += 0.5
+        
+        print_board(board)
 
 if __name__ == "__main__":
     main()
