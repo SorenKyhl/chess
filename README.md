@@ -14,9 +14,12 @@ Functional Implementation; no OOP
 
 
 # Not Implemented:
-    - king movement
     - draw and stalemate logic
     - points counter to show who has more material on the board
+
+# todo:
+    - make sure pawns don't move out of bounds
+    - debug checkmate logic
 
 
 # Design Choices:

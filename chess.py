@@ -121,6 +121,8 @@ def get_valid_squares(piece: ChessPiece, square: ChessSquare, board: ChessBoard,
         valid_squares = get_queen_valid_squares(board, square, player)
     elif type(piece) is str and piece.lower() == "n":
         valid_squares = get_knight_valid_squares(board, square, player)
+    elif type(piece) is str and piece.lower() == "k":
+        valid_squares = get_king_valid_squares(board, square, player)
     else:
         valid_squares = set()
 
@@ -132,6 +134,7 @@ def get_pawn_move_squares(board: ChessBoard, square: ChessSquare, player: ChessP
     row, col = indices(square)
     direction = -1 if player else 1
 
+    #TODO make sure thid doesn't go out of bounds
     if not board[row + direction][col]:
         # move pawn forward
         valid_squares.add((row + direction, col))
@@ -235,6 +238,7 @@ def get_queen_valid_squares(board: ChessBoard, square: ChessSquare, player: Ches
     valid_squares = valid_squares.union(get_bishop_valid_squares(board, square, player))
     return valid_squares
 
+
 def get_knight_valid_squares(board: ChessBoard, square: ChessSquare, player: ChessPlayer) -> Set[BoardIndices]:
     valid_squares = set()
     row, col = indices(square)
@@ -257,9 +261,25 @@ def get_knight_valid_squares(board: ChessBoard, square: ChessSquare, player: Che
                 continue
             valid_squares.add((row_to, col_to))
 
-
     return valid_squares
 
+
+def get_king_valid_squares(board: ChessBoard, square: ChessSquare, player: ChessPlayer) -> Set[BoardIndices]:
+    valid_squares = set()
+    row, col = indices(square)
+    dirs = [-1, 0, 1]
+    for x_dir in dirs:
+        for y_dir in dirs:
+            row_to = row + x_dir
+            col_to = col + y_dir
+            if in_bounds(row_to) and in_bounds(col_to):
+                piece = board[row_to][col_to]
+                if player_from_piece(piece) == opponent(player):
+                    valid_squares.add((row_to, col_to))
+                if not piece:
+                    valid_squares.add((row_to, col_to))
+
+    return valid_squares
 
 
 def remove_piece(square: ChessSquare, board: ChessBoard) -> ChessBoard:
@@ -317,9 +337,9 @@ def in_check(board: ChessBoard, player: ChessPlayer) -> bool:
 
     return indices(king_square) in attacking_squares(board, opponent(player))
 
+
 def in_checkmate(board: ChessBoard, player: ChessPlayer) -> bool:
     """return if the player is in checkmate"""
-
     for i, row in enumerate(board):
         for j, piece in enumerate(row):
             if piece and player_from_piece(piece) == player:
@@ -335,8 +355,6 @@ def in_checkmate(board: ChessBoard, player: ChessPlayer) -> bool:
                     else:
                         board = move_piece(square_to, square_from, board)
     return True
-                
-
 
 
 def select_move(board: ChessBoard, square_from: ChessSquare, player: ChessPlayer) -> bool:
