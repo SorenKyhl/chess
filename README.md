@@ -12,12 +12,12 @@ Functional Implementation; no OOP
         - not implemented: en passant, queen promotion
     - check and checkmate logic
 
-
 # Not Implemented:
-    - king movement
     - draw and stalemate logic
     - points counter to show who has more material on the board
 
+# todo:
+    - make sure pawns don't move out of bounds
 
 # Design Choices:
     - represent the board as a 2D array
