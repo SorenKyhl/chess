@@ -11,10 +11,10 @@ Functional Implementation; no OOP
     - basic pawn, knight, and sliding pieces logic: moving and captures
         - not implemented: en passant, queen promotion
     - check and checkmate logic
+	- material points counter
 
 # Not Implemented:
     - draw and stalemate logic
-    - points counter to show who has more material on the board
 
 # todo:
     - make sure pawns don't move out of bounds

@@ -386,6 +386,30 @@ def select_move(board: ChessBoard, square_from: ChessSquare, player: ChessPlayer
     return True
 
 
+def player_pieces(board: ChessBoard, player: ChessPlayer):
+    pieces = {}
+    for i, row in enumerate(board):
+        for j, piece in enumerate(row):
+            if player_from_piece(piece) == player:
+                pieces[piece] = (i, j)
+
+    return pieces
+
+def material_points(board: ChessBoard, player: ChessPlayer):
+    """calculates the material points on the board for the given player"""
+    piece_values = {"q": 9, "r": 5, "b": 3, "n": 3, "p": 1, "k": 0}
+    pieces = player_pieces(board, player)
+    return sum([piece_values[piece.lower()] for piece in pieces])
+
+
+def print_material_points(board):
+    white_points = material_points(board, 1)
+    black_points = material_points(board, 0)
+
+    print(f"white: {white_points}, black: {black_points}")
+    print(f"material advantage: {white_points - black_points}")
+
+
 def main():
     board = [
             ["r", "n", "b", "q", "k", "b", "n", "r"],
@@ -407,12 +431,14 @@ def main():
         print("White: uppercase, Black: lowercase")
         print(f"Move: {move}")
         print(f"{player_to_string(player)}'s turn")
+        print_material_points(board)
         print_board(board)
 
         if in_checkmate(board, player):
             print("game over, you are in checkmate!!")
         elif in_check(board, player):
             print("you are in check!!")
+
 
         square_from = select_piece(board, player)
         print_valid_move_squares(square_from, board)
