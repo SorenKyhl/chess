@@ -410,6 +410,15 @@ def print_material_points(board):
     print(f"material advantage: {white_points - black_points}")
 
 
+def print_game_state(board: ChessBoard, player: ChessPlayer, move: float):
+    """prints the status of the game and the current board state"""
+    print("----Chess Game-----")
+    print("White: uppercase, Black: lowercase")
+    print(f"Move: {move}")
+    print(f"{player_to_string(player)}'s turn")
+    print_material_points(board)
+    print_board(board)
+
 def main():
     board = [
             ["r", "n", "b", "q", "k", "b", "n", "r"],
@@ -427,30 +436,23 @@ def main():
 
     while True:
         os.system("clear")
-        print("----Chess Game-----")
-        print("White: uppercase, Black: lowercase")
-        print(f"Move: {move}")
-        print(f"{player_to_string(player)}'s turn")
-        print_material_points(board)
-        print_board(board)
+        print_game_state(board, player, move)
 
         if in_checkmate(board, player):
             print("game over, you are in checkmate!!")
+            break
         elif in_check(board, player):
             print("you are in check!!")
-
 
         square_from = select_piece(board, player)
         print_valid_move_squares(square_from, board)
         move_success = select_move(board, square_from, player)
 
-        if not move_success:
-            continue
-
-        player = opponent(player)
-        move += 0.5
-        
-        print_board(board)
+        if move_success:
+            player = opponent(player)
+            move += 0.5
+    
+    print(f"{player_to_string(opponent(player))} wins!")
 
 if __name__ == "__main__":
     main()
