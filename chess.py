@@ -347,13 +347,12 @@ def in_checkmate(board: ChessBoard, player: ChessPlayer) -> bool:
                 square_from = square_from_indices((i,j))
                 for indices_to in get_valid_squares(piece, square_from, board):
                     square_to = square_from_indices(indices_to)
-                    board = move_piece(square_from, square_to, board)
-                    if not in_check(board, player):
+                    # copy so the original board state isn't mutated
+                    board_to = copy.deepcopy(board) 
+                    board_to = move_piece(square_from, square_to, board_to)
+                    if not in_check(board_to, player):
                         # if any move can be played, they are not in checkmate
-                        board = move_piece(square_to, square_from, board)
                         return False
-                    else:
-                        board = move_piece(square_to, square_from, board)
     return True
 
 
