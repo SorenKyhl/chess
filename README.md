@@ -3,9 +3,6 @@
 # Chess Game
 ![example workflow](https://github.com/SorenKyhl/chess/actions/workflows/python-app.yml/badge.svg)
 
-Functional Implementation; no OOP
-
-
 # Current Features:
     - core game loop: players take turn selecting and moving pieces
     - basic piece logic: moving and captures
@@ -18,7 +15,7 @@ Functional Implementation; no OOP
     - pawn promotion
 
 # todo:
-    - make sure pawns don't move out of bounds
+    - make board class for easier access to pieces
 
 # Design Choices:
     - represent the board as a 2D array

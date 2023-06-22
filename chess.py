@@ -134,8 +134,7 @@ def get_pawn_move_squares(board: ChessBoard, square: ChessSquare, player: ChessP
     row, col = indices(square)
     direction = -1 if player else 1
 
-    #TODO make sure thid doesn't go out of bounds
-    if not board[row + direction][col]:
+    if in_bounds(row+direction) and not board[row + direction][col]:
         # move pawn forward
         valid_squares.add((row + direction, col))
 
@@ -152,10 +151,10 @@ def get_pawn_attack_squares(board: ChessBoard, square: ChessSquare, player: Ches
     row, col = indices(square)
     direction = -1 if player else 1
 
-    if col > 0 and player_from_piece(board[row + direction][col-1]) == opponent(player):
+    if col > 0 and in_bounds(row+direction) and player_from_piece(board[row + direction][col-1]) == opponent(player):
         # capture left
         valid_squares.add((row + direction, col-1))
-    if col < 7 and player_from_piece(board[row + direction][col+1]) == opponent(player):
+    if col < 7 and in_bounds(row+direction) and player_from_piece(board[row + direction][col+1]) == opponent(player):
         # capture right
         valid_squares.add((row + direction, col+1))
 
@@ -421,14 +420,14 @@ def print_game_state(board: ChessBoard, player: ChessPlayer, move: float):
 
 def main():
     board = [
-            ["r", "n", "b", "q", "k", "b", "n", "r"],
-            ["p", "p", "p", "p", "p", "p", "p", "p"],
+            [0, "n", "b", "q", "k", "b", "n", "r"],
+            ["P", "p", "p", "p", "p", "p", "p", "p"],
             [0, 0, 0, 0, 0, 0, 0, 0],
             [0, 0, 0, 0, 0, 0, 0, 0],
             [0, 0, 0, 0, 0, 0, 0, 0],
             [0, 0, 0, 0, 0, 0, 0, 0],
-            ["P","P","P","P","P","P","P","P"],
-            ["R", "N", "B", "Q", "K", "B", "N", "R"],
+            ["p","P","P","P","P","P","P","P"],
+            [0, "N", "B", "Q", "K", "B", "N", "R"],
             ]
 
     player = 1
