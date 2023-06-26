@@ -459,11 +459,11 @@ def print_game_state(board: ChessBoard, player: ChessPlayer, move: float):
     print_board(board)
 
 
-def main():
+def play_game():
+    """play game of chess"""
     board = initial_board_state
     player = 1
     move = 1
-
     while True:
         os.system("clear")
         print_game_state(board, player, move)
@@ -483,6 +483,11 @@ def main():
             move += 0.5
     
     print(f"{player_to_string(opponent(player))} wins!")
+
+
+def main():
+    play_game()
+
 
 if __name__ == "__main__":
     main()
